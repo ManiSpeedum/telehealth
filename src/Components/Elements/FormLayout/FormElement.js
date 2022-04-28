@@ -49,10 +49,10 @@ export const TextBox = (props) => {
         type="text"
         // name="textBox"
         name={props.filedName}
-        // id={fieldIdd}
+        id={props.fieldIdd}
         value={textBox}
         className="form-control"
-        id="usr"
+        // id="usr"
         onChange={onChangeTextBox}
       />
     </div>
@@ -96,7 +96,7 @@ export const TextArea = (props) => {
     <div className="form-group">
        <label for="comment">Comment:</label>
   <textarea class="form-control"   name={props.filedName} 
-  //  id={fieldIdd}
+   id={props.fieldIdd}
     rows="5" id="comment"  value={textArea}  onChange={onChangeTextArea}></textarea>
     </div>
   );
@@ -143,7 +143,7 @@ export const FormFileUpload = (props) => {
         type="file"
         // name="file"
         name={props.filedName}
-        // id={fieldIdd}
+        id={props.fieldIdd}
         onChange={handleChangeFileUpload}
       ></input>
       {isValidFile ? null : (
@@ -171,7 +171,7 @@ export const SimpleCheckbox = (props) => {
         type="checkbox"
         className="form-check-input"
         // id="exampleCheck1"
-        // id={fieldIdd}
+        id={props.fieldIdd}
         onChange={onChangeCheckedSimpleCheckbox}
       />
       <label
@@ -195,7 +195,7 @@ export const ToggleButton = (props) => {
   return (
     <label className="switch">
       <input type="checkbox" onChange={triggerToggle}   name={props.filedName}
-        // id={fieldIdd}
+        id={props.fieldIdd}
         />
       <span className="slider round"></span>
     </label>
@@ -540,6 +540,39 @@ const DynamicdropdownOptions = [
   { label: "Meat", value: "meat" },
 ];
 
+
+// export const Dynamicdropdown = (props) => {
+
+//     const [values, setvalue] = useState("");
+  
+//     // console.log(values);
+  
+  
+  
+//     return (
+  
+//       <div> 
+  
+//         <select className="" id="" name="">
+  
+//           
+  
+//            data.map(
+  
+//              <option value={row.field_option_id}>{row.option_value}</option>
+  
+//            )
+  
+  
+  
+//         </select>
+  
+//       </div>
+  
+//     );
+  
+//   };
+
 export const Dynamicdropdown = (props) => {
   const [values, setvalue] = useState("");
   // console.log(values);
@@ -549,6 +582,7 @@ export const Dynamicdropdown = (props) => {
       <Dropdown
         options={DynamicdropdownOptions}
         name={props.filedName}
+        id={props.fieldIdd}
         defaultValue={values}
         placeholder="Select an option"
         onChange={setvalue}

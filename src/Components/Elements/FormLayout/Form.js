@@ -105,18 +105,12 @@ const Form = (props) => {
                   {data.section_label}
                 </div>
 
-                {/* {data.fb_mst_fields_table.map((i)=>{
-                  return(
-                    <div>{i.field_label}</div>
-                  )
-                })} */}
-
                 <div className="formSubHeadingContainer">
                   {data.fb_mst_form_field_mapping_table.map(
                     (datalabel, index) => {
                       let filedName=datalabel.ff_id+"_"+datalabel.ff_form_id  +"__"+datalabel.ff_field_id;
                       let fieldIdd=datalabel.ff_id+"_"+datalabel.ff_form_id+"__"+datalabel.ff_field_id;
-                      // let disabledAttr='';
+                      let disabledAttr='';
                       // let labelClass='';
                       // let divClass='';
                       // if(con){
