@@ -6,12 +6,19 @@ import SidebarIcons from "../AppSidebar/SidebarComponents/LefttSidebarComponents
 
 const AppHeader = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
+  // console.log(showSearchResults);
+  const[searchInput,setSearchInput]=useState('');
+  // console.log(searchInput);
   const [showLeftHamburgerResults, setShowLeftHamburgerResults] = useState(false);
   const [showRightHamburgerResults, setShowRightHamburgerResults] = useState(false);
 
   const onClickSearchBox = () => {
     setShowSearchResults(true);
   };
+
+  const onChangeSearchInput = (e) =>{
+    setSearchInput(e.target.value)
+  }
   const onClickCloseSearchBox = () => {
     setShowSearchResults(false);
   };
@@ -85,7 +92,7 @@ const AppHeader = () => {
                       onClick={onClickSearchBox}
                       className="SearchbarButton"
                     >
-                      <i class="fa fa-search" style={{ color: "blue" }}></i>
+                      <i className="fa fa-search" style={{ color: "blue" }}></i>
                     </button>
                     <li>
                       {showSearchResults ? (
@@ -95,6 +102,8 @@ const AppHeader = () => {
                             placeholder="Search.."
                             name="search"
                             className="Searchbox"
+                            value={searchInput}
+                            onChange={onChangeSearchInput}
                           />
                           <button onClick={onClickCloseSearchBox}>
                             <i
@@ -311,7 +320,7 @@ const AppHeader = () => {
                           onClick={onClickRightHamburger}
                           className="RightHamburgerIcon"
                         >
-                          <span class="navbar-toggler-icon"></span>
+                          <span className="navbar-toggler-icon"></span>
                         </button>
                         <li>
                       {showRightHamburgerResults ? 
@@ -319,7 +328,7 @@ const AppHeader = () => {
                           {/* <SidebarIcons/> */}
                           <button onClick={onClickCloseRightHamburgerBox} className="CloseRightHamburgerBox">
                             <i
-                              class="fa fa-close"
+                              className="fa fa-close"
                               style={{ color: "grey",opacity:'0.5',fontSize:'30px' }}
                             ></i>
                           </button>

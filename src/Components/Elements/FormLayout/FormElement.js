@@ -3,7 +3,7 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
   KeyboardDateTimePicker,
-  KeyboardTimePicker
+  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -22,11 +22,96 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import Select from "react-select";
 // import { MultiSelectCheckBox } from "multi-select-checkbox/dist/MultiSelectCheckBox";
-import ImagePicker from 'react-image-picker'
-import img1 from '../../../../assets/imagepick.png';
-import img2 from '../../../../assets/imagepick.png';
-import img3 from '../../../../assets/imagepick.png';
-import 'react-image-picker/dist/index.css';
+import ImagePicker from "react-image-picker";
+import img1 from "../../../assets/imagepick.png";
+import img2 from "../../../assets/imagepick.png";
+import img3 from "../../../assets/imagepick.png";
+import "react-image-picker/dist/index.css";
+import { useSpeechRecognition } from "react-speech-kit";
+// import { Carousel,SwipeSlider  } from '@farfetch/react-carousel';
+// import '@farfetch/react-carousel/styles.css'
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
+
+export const TextBox = (props) => {
+  console.log(props);
+  const [textBox, setTextBox] = useState("");
+  console.log(textBox);
+
+  const onChangeTextBox = (e) => {
+    setTextBox(e.target.value);
+  };
+
+  return (
+    <div className="form-group">
+      <input
+        type="text"
+        // name="textBox"
+        name={props.filedName}
+        // id={fieldIdd}
+        value={textBox}
+        className="form-control"
+        id="usr"
+        onChange={onChangeTextBox}
+      />
+    </div>
+  );
+};
+
+export const Separator = (props) =>{
+  return(
+    <div>
+      <hr class="solid"/>
+    </div>
+  )
+}
+
+ export const ButtonRadio = () =>{
+
+  const [value,setValue]=useState('')
+  console.log(value);
+  const onClickButtonRadio = (e)=>{{
+    setValue(e.target.value)
+  }}
+   return(
+    <div className="custom-radio custom-control custom-control-inline ">
+    <div className="form-group">
+      <input type="radio" value="MALE" name="gender" onClick={onClickButtonRadio}/> Male
+      <input type="radio" value="FEMALE" name="gender"  onClick={onClickButtonRadio}/> Female
+    </div>
+  </div>
+   )
+ }
+
+export const TextArea = (props) => {
+  const [textArea, setTextArea] = useState("");
+  console.log(textArea);
+
+  const onChangeTextArea = (e) => {
+    setTextArea(e.target.value);
+  };
+
+  return (
+    <div className="form-group">
+       <label for="comment">Comment:</label>
+  <textarea class="form-control"   name={props.filedName} 
+  //  id={fieldIdd}
+    rows="5" id="comment"  value={textArea}  onChange={onChangeTextArea}></textarea>
+    </div>
+  );
+};
+
+export const ContentEditableDiv = () =>{
+  return(
+    <div
+  contentEditable='true'
+  onInput={e => console.log('Text inside div', e.currentTarget.textContent)}
+>
+Text inside div
+</div>
+  )
+}
 
 export const FormFileUpload = (props) => {
   const [file, setFile] = useState("");
@@ -56,7 +141,9 @@ export const FormFileUpload = (props) => {
         className="form-control form-control-lg"
         id="formFileLg"
         type="file"
-        name="file"
+        // name="file"
+        name={props.filedName}
+        // id={fieldIdd}
         onChange={handleChangeFileUpload}
       ></input>
       {isValidFile ? null : (
@@ -70,14 +157,6 @@ export const FormFileUpload = (props) => {
   );
 };
 
-export const FormPhoneNumber = (props) => {
-  return (
-    <div className="input-group">
-      <span className="input-group-addon">Tel</span>
-      <input type="tel" className="form-control" />
-    </div>
-  );
-};
 
 export const SimpleCheckbox = (props) => {
   const [checked, setChecked] = useState(false);
@@ -91,10 +170,14 @@ export const SimpleCheckbox = (props) => {
       <input
         type="checkbox"
         className="form-check-input"
-        id="exampleCheck1"
+        // id="exampleCheck1"
+        // id={fieldIdd}
         onChange={onChangeCheckedSimpleCheckbox}
       />
-      <label className="form-check-label checkbox-label" htmlFor="exampleCheck1">
+      <label
+        className="form-check-label checkbox-label"
+        htmlFor="exampleCheck1"
+      >
         Agree to terms and conditions
       </label>
     </div>
@@ -111,7 +194,9 @@ export const ToggleButton = (props) => {
 
   return (
     <label className="switch">
-      <input type="checkbox" onChange={triggerToggle} />
+      <input type="checkbox" onChange={triggerToggle}   name={props.filedName}
+        // id={fieldIdd}
+        />
       <span className="slider round"></span>
     </label>
   );
@@ -120,13 +205,13 @@ export const ToggleButton = (props) => {
 export const Calender = (props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   // console.log(selectedDate);
-  const [selectedDateTime, setSelectedDateTime] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
-  // console.log(selectedDateTime);
-  const [selectedTime, setSelectedTime] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
+  // const [selectedDateTime, setSelectedDateTime] = useState(
+  //   new Date("2014-08-18T21:11:54")
+  // );
+  // // console.log(selectedDateTime);
+  // const [selectedTime, setSelectedTime] = useState(
+  //   new Date("2014-08-18T21:11:54")
+  // );
   //  console.log(selectedTime);
 
   const handleDateChange = (date) => {
@@ -134,15 +219,15 @@ export const Calender = (props) => {
     setSelectedDate(date);
   };
 
-  const handleDateTimeChange = (date) => {
-    // console.log(date);
-    setSelectedDateTime(date);
-  };
+  // const handleDateTimeChange = (date) => {
+  //   // console.log(date);
+  //   setSelectedDateTime(date);
+  // };
 
-  const handleTimeChange = (time) => {
-    // console.log(time);
-    setSelectedTime(time);
-  };
+  // const handleTimeChange = (time) => {
+  //   // console.log(time);
+  //   setSelectedTime(time);
+  // };
 
   return (
     <div>
@@ -153,7 +238,7 @@ export const Calender = (props) => {
           onChange={handleDateChange}
         ></KeyboardDatePicker>
       </MuiPickersUtilsProvider>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <br />
         <KeyboardDateTimePicker
           label="Date-Time"
@@ -168,7 +253,7 @@ export const Calender = (props) => {
           value={selectedTime}
           onChange={handleTimeChange}
         ></KeyboardTimePicker>
-      </MuiPickersUtilsProvider>
+      </MuiPickersUtilsProvider> */}
     </div>
   );
 };
@@ -217,31 +302,36 @@ export const FormRichTextEditor = (props) => {
 };
 
 export const Slider = (props) => {
+  // console.log(index);
 
   return (
-    <div className="container SliderContainer" style={{ position: "relative" }}>
+    <div className="container SliderContainer">
       <div
         id="myCarousel"
         className="carousel slide SliderSlide"
         data-ride="carousel"
       >
         {/* Indicators */}
-        <ol className="carousel-indicators SliderIndicators" >
-          <li data-target="#myCarousel" 
-          index="0"
-          // data-slide-to='0' 
-          // data-slide-to={index}
-          class="active" ></li>
-          <li data-target="#myCarousel" 
-          index="1"
-          // data-slide-to='1'
-          // data-slide-to={index}
-           ></li>
-          <li data-target="#myCarousel" 
-          index="2"
-          // data-slide-to='2'
-          // data-slide-to={index}
-           ></li>
+        <ol className="carousel-indicators SliderIndicators">
+          <li
+            data-target="#myCarousel"
+            index="0"
+            data-slide-to="0"
+            // data-slide-to={index}
+            className="active"
+          ></li>
+          <li
+            data-target="#myCarousel"
+            index="1"
+            data-slide-to="1"
+            // data-slide-to={index}
+          ></li>
+          <li
+            data-target="#myCarousel"
+            index="2"
+            data-slide-to="2"
+            // data-slide-to={index}
+          ></li>
         </ol>
 
         {/* Wrapper for slides */}
@@ -270,7 +360,6 @@ export const Slider = (props) => {
             />
           </div>
         </div>
-
         {/* Left and right controls  */}
         <a
           className="left carousel-control"
@@ -294,7 +383,6 @@ export const Slider = (props) => {
 };
 
 export const DateRange = (props) => {
-
   const [DateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -317,10 +405,9 @@ export const DateRange = (props) => {
 };
 
 export const ImageAnnotation = () => {
-
-  const [selectedId,setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useState("");
   // console.log(selectedId);
-  const [data,setData] = useState('')
+  const [data, setData] = useState("");
   // console.log(data);
 
   const [pageSize, setPageSize] = useState({
@@ -335,15 +422,14 @@ export const ImageAnnotation = () => {
   useEffect(() => {
     addEventListener("resize", onResize);
     // window.addEventListener("resize", onResize);
-    return () =>
-    removeEventListener("resize", onResize);
+    return () => removeEventListener("resize", onResize);
     //  window.removeEventListener("resize", onResize);
   }, []);
 
-  const onSelectImageAnnotation = ((selectedId) => {
-    setSelectedId(selectedId)
-  });
-  const onChangeImageAnnotation = (data) => setData( data);
+  const onSelectImageAnnotation = (selectedId) => {
+    setSelectedId(selectedId);
+  };
+  const onChangeImageAnnotation = (data) => setData(data);
 
   return (
     <div>
@@ -359,26 +445,90 @@ export const ImageAnnotation = () => {
 };
 
 export const TextandSpeechRecognition = (props) => {
-  
-  // const {
-  //   transcript,
-  //   listening,
-  //   resetTranscript,
-  //   browserSupportsSpeechRecognition
-  // } = useSpeechRecognition();
+  const [value, setValue] = useState("");
+  console.log(value);
+  const [blocked, setBlocked] = useState(false);
 
-  // if (!browserSupportsSpeechRecognition) {
-  //   return <span>Browser doesn't support speech recognition.</span>;
+  const onEnd = () => {
+    // You could do something here after listening has finished
+  };
 
-  // }
+  const onResult = (result) => {
+    setValue(result);
+  };
+
+  const onError = (event) => {
+    if (event.error === "not-allowed") {
+      setBlocked(true);
+    }
+  };
+
+  const { listen, listening, stop, supported } = useSpeechRecognition({
+    onResult,
+    onEnd,
+    onError,
+  });
+
+  const toggle = listening
+    ? stop
+    : () => {
+        setBlocked(false);
+        listen("");
+      };
 
   return (
     <div>
-       {/* <p>Microphone: {listening ? 'on' : 'off'}</p>
-      <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p> */}
+      <div>
+        <form id="speech-recognition-form">
+          {!supported && (
+            <p>
+              Oh no, it looks like your browser doesn&#39;t support Speech
+              Recognition.
+            </p>
+          )}
+          <div>
+            {supported && (
+              <div className="textSpeechBox">
+                <textarea
+                  // id="transcript"
+                  // id={fieldIdd}
+                  // name="transcript"
+                  // name={filedName}
+                  placeholder="Waiting to take notes ..."
+                  value={value}
+                  rows={3}
+                  disabled
+                />
+                <div className="microphone">
+                  {listening ? (
+                    <div>
+                      <i
+                        className="fa fa-microphone"
+                        style={{ color: "red" }}
+                      ></i>
+                      <button disabled={blocked} type="button" onClick={toggle}>
+                        Stop
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <i className="fa fa-microphone"></i>
+                      <button disabled={blocked} type="button" onClick={toggle}>
+                        Start
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {blocked && (
+                  <p style={{ color: "red" }}>
+                    The microphone is blocked for this site in your browser.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
@@ -398,6 +548,7 @@ export const Dynamicdropdown = (props) => {
     <div>
       <Dropdown
         options={DynamicdropdownOptions}
+        name={props.filedName}
         defaultValue={values}
         placeholder="Select an option"
         onChange={setvalue}
@@ -412,7 +563,6 @@ const MultiselectOptions = [
   { value: "vanilla", label: "Vanilla" },
 ];
 export const Multiselect = (props) => {
-
   const [selectedOption, setselectedOption] = useState("");
 
   // console.log(selectedOption);
@@ -420,56 +570,90 @@ export const Multiselect = (props) => {
   return (
     <div>
       <Select
-      isMulti={selectedOption}
-      value={selectedOption}
-      onChange={setselectedOption}
-      options={MultiselectOptions}
-    />
+        isMulti={selectedOption}
+        value={selectedOption}
+        onChange={setselectedOption}
+        options={MultiselectOptions}
+      />
     </div>
-    
   );
 };
 
-const ImageCheckboxList = [img1, img2, img3]
+const ImageCheckboxList = [img1, img2, img3];
 
 export const ImageCheckbox = (props) => {
-
-  const[image,setimage]=useState('')
-    // console.log(image);
-    const onPickImage = (image) =>{
-        setimage(image)
-    }
+  const [image, setimage] = useState("");
+  // console.log(image);
+  const onPickImage = (images) => {
+    setimage({images});
+  };
 
   return (
     <div>
-    <ImagePicker
-    ismulti={image}
-    images={ImageCheckboxList.map((image, i) => ({src: image, value: i}))}
-    onPick={onPickImage}
-    />
-    <div>
-      <button type="button" onClick={() => console.log(image)} className="btn btn-primary">OK</button>
+      <ImagePicker
+       multiple
+        maxPicks={2}
+        images={ImageCheckboxList.map((image, i) => ({ src: image, value: i }))}
+        onPick={onPickImage}
+      />
+      <div>
+        <button
+          type="button"
+          onClick={() => console.log(image)}
+          className="btn btn-primary"
+        >
+          OK
+        </button>
+      </div>
     </div>
-    
- </div>
   );
 };
 
+export const PhoneInput2 = () => {
+  const [phone, setphone] = useState("");
+  // console.log(phone);
 
-const images=[
-    {id:1,img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"},
-    {id:2,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png'},
-    {id:3,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png'}
-  ]
-
-export const ImageRadio = () =>{
-
-  
-  return(
+  return (
     <div>
-      ImageRadio
+      <PhoneInput
+        country={"us"}
+        value={phone}
+        onChange={(phone) => setphone(phone)}
+      />
     </div>
-  )
-}
+  );
+};
 
+// const images = [
+//   {
+//     id: 1,
+//     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
+//   },
+//   {
+//     id: 2,
+//     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
+//   },
+//   {
+//     id: 3,
+//     img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
+//   },
+// ];
 
+// export const ImageRadio = () => {
+//  const handleAfterChange = (e) => {
+//     console.log(e.index);
+//     console.log(e.dir);
+// };
+
+//   return <div>
+//     <Carousel className={ Style.container } isInfinite isRTL itemsToShow={ 2 } onAfterChange={ handleAfterChange }>
+//         <SwipeSlider className={ Style.slider } disableSwipe hasKeysNavigation>
+//             <div className={ Style.customItem }>Item 1</div>
+//             <div className={ Style.moreCustomItem }>Item 2</div>
+//             <div>Item 3</div>
+//             <div>Item 4</div>
+//             <div>Item 5</div>
+//         </SwipeSlider>
+//     </Carousel>
+//   </div>;
+// };
